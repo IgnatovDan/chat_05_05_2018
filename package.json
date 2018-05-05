@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/IgnatovDan/chat_05_05_2018/issues"
   },
-  "homepage": "https://github.com/IgnatovDan/chat_05_05_2018#readme"
+  "homepage": "https://github.com/IgnatovDan/chat_05_05_2018#readme",
+  "dependencies": {
+    "static-livereload": "^0.1.4"
+  }
 }
