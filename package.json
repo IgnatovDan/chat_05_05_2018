@@ -1,0 +1,19 @@
+{
+  "name": "chat_05_05_2018",
+  "version": "0.0.1",
+  "description": "project for learn jsavascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgnatovDan/chat_05_05_2018.git"
+  },
+  "author": "Dan Ignatov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IgnatovDan/chat_05_05_2018/issues"
+  },
+  "homepage": "https://github.com/IgnatovDan/chat_05_05_2018#readme"
+}
