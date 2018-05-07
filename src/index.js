@@ -1,8 +1,8 @@
 'use strict';
 
-const chatEl = document.querySelector('.marker-chatEl');
+const chatEl = document.getElementById('chatEl');
 if(chatEl === null) {
-  throw new Error("queryElement('.marker-chatEl') returned null.");
+  throw new Error("getElementById('chatEl') returned null.");
 }
 
 const messages = [
