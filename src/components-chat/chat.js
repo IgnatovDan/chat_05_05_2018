@@ -1,20 +1,27 @@
-import renderChatMessage from './chat__message/chat__message.js';
-import renderChatReplay from './chat__reply/chat__reply.js';
-
 export default function renderChat({el, messages} = {}) {
-  if(!el || !messages) throw new Error("incorrect arguments");
+  if(!el) {
+    throw new Error("el");
+  }
+
+  if(!messages) {
+    throw new Error("messages");
+  }
 
   messages.forEach(
-    (message) => {
-      el.appendChild(
-        renderChatMessage({el: document.createElement('div'), message})
-      );
+    (item) => {
+      const messageEl = document.createElement('div');
+      messageEl.innerHTML = 
+        `<div class="сhat__message">
+          <div class="сhat__message__user-photo">${item.userPhoto}</div>
+          <div class="сhat__message__user-name">${item.userName}</div>
+          <div class="сhat__message__sent-time">${item.sentTime.toLocaleString()}</div>
+          <div class="сhat__message__text">${item.text}</div>
+        </div>`;
+        chatEl.appendChild(messageEl);
     }
   );
 
-  el.appendChild(
-    renderChatReplay({el: document.createElement('div')})
-  );
-  
-  return el;
+  const replyEl = document.createElement('div');
+  replyEl.innerHTML = '<div class="сhat__reply">Reply</div>';
+  chatEl.appendChild(replyEl);
 }
