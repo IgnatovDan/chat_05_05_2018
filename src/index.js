@@ -2,11 +2,6 @@
 
 import renderChat from './components-chat/chat.js';
 
-const chatEl = document.getElementById('chatEl');
-if(chatEl === null) {
-  throw new Error("getElementById('chatEl') returned null.");
-}
-
 const messages = [
   {userPhoto: 'user1_photo', userName: 'Ayowa Sonito', sentTime: new Date(new Date().getTime() - 10*60000), text: 'hi!'},
   {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(new Date().getTime() - 9*60000), text: 'xdf'},
@@ -15,4 +10,4 @@ const messages = [
   {userPhoto: 'user5_photo', userName: 'Daniella Thompson', sentTime: new Date(), text: 'welcome!!'},
 ];
 
-renderChat({el: chatEl, messages});
+renderChat({el: document.getElementById('chatEl'), messages});
