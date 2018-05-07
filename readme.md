@@ -2,6 +2,8 @@
 
 This web site is published at https://ignatovdan.github.io/chat_05_05_2018/
 
+See https://github.com/IgnatovDan/chat_05_05_2018/projects/1 to see plans and progress.
+
 ## How to start ##
 * download
 * `npm install`
