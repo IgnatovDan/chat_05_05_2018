@@ -4,8 +4,16 @@ import renderChatReplay from './chat__reply/chat__reply.js';
 export default function renderChat({el, messages} = {}) {
   if(!el || !messages) throw new Error("incorrect arguments");
 
-  addChatStyleSheet();
-  
+  /*???
+
+  var head  = document.getElementsByTagName('head')[0];
+  var link  = document.createElement('link');
+  link.rel  = 'stylesheet';
+  link.href = './src/components-chat/chat.css';
+  head.appendChild(link);
+
+  */
+
   messages.forEach(
     (message) => {
       el.appendChild(
@@ -19,12 +27,4 @@ export default function renderChat({el, messages} = {}) {
   );
   
   return el;
-}
-
-function addChatStyleSheet() {
-  var head  = document.getElementsByTagName('head')[0];
-  var link  = document.createElement('link');
-  link.rel  = 'stylesheet';
-  link.href = './src/components-chat/chat.css';
-  head.appendChild(link);
 }
