@@ -1,0 +1,23 @@
+/****** сhat__message ******/
+
+.сhat__message {
+  border: 1px solid lightgreen;
+}
+.сhat__message__user-photo {
+  color: cornflowerblue
+}
+.сhat__message__user-name {
+  color: rgb(58, 99, 154)
+}
+.сhat__message__sent-time {
+  color: rgb(117, 124, 172)
+}
+.сhat__message__text {
+  font-weight: bold
+}
+
+/****** сhat__reply ******/
+
+.сhat__reply {
+  background-color: lightgray
+}
