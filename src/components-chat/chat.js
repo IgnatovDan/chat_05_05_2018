@@ -1,7 +1,7 @@
 import renderChatMessage from './chat__message/chat__message.js';
 import renderChatReplay from './chat__reply/chat__reply.js';
 
-export default function renderChat({el, messages} = {}) {
+export default function Chat({el, messages} = {}) {
   if(!el || !messages) throw new Error("incorrect arguments");
 
   /*???
@@ -14,17 +14,21 @@ export default function renderChat({el, messages} = {}) {
 
   */
 
-  messages.forEach(
+ 
+  this.el = el;
+  this.messages = messages;
+}
+
+Chat.prototype.render = function() {
+  this.messages.forEach(
     (message) => {
-      el.appendChild(
+      this.el.appendChild(
         renderChatMessage({el: document.createElement('div'), message})
       );
     }
   );
 
-  el.appendChild(
+  this.el.appendChild(
     renderChatReplay({el: document.createElement('div')})
   );
-  
-  return el;
 }
