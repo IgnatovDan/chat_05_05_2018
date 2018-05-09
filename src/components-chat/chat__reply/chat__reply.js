@@ -1,7 +1,9 @@
-export default function renderChatReplay({el} = {}) {
+export default function ChatReplay({el} = {}) {
   if(!el) throw new Error("incorrect arguments");
-  
-  el.classList.add('сhat__reply');
+  this.el = el;
+}
 
-  return el;
+ChatReplay.prototype.render = function() {
+  this.el.classList.add('сhat__reply');
+  this.el.innerText = 'Reply';
 }
