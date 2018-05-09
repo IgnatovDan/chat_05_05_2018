@@ -5,7 +5,7 @@ export default class ChatReplay {
   }
 
   render() {
-    this.el.classList.add('сhat__reply');
+    this.el.classList.add('chat__reply');
     this.el.innerText = 'Reply';
   }
 }

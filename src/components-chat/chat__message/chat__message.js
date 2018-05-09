@@ -6,13 +6,13 @@ export default class ChatMessage {
   }
 
   render() {
-    this.el.classList.add('сhat__message');
+    this.el.classList.add('chat__message');
   
     this.el.innerHTML = `
-      <div class="сhat__message__user-photo">${this.message.userPhoto}</div>
-      <div class="сhat__message__user-name">${this.message.userName}</div>
-      <div class="сhat__message__sent-time">${this.message.sentTime.toLocaleString()}</div>
-      <div class="сhat__message__text">${this.message.text}</div>
+      <div class="chat__message__user-photo">${this.message.userPhoto}</div>
+      <div class="chat__message__user-name">${this.message.userName}</div>
+      <div class="chat__message__sent-time">${this.message.sentTime.toLocaleString()}</div>
+      <div class="chat__message__text">${this.message.text}</div>
       `;
   }
 }
