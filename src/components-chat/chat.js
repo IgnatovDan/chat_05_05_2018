@@ -1,4 +1,4 @@
-import renderChatMessage from './chat__message/chat__message.js';
+import ChatMessage from './chat__message/chat__message.js';
 import renderChatReplay from './chat__reply/chat__reply.js';
 
 export default function Chat({el, messages} = {}) {
@@ -22,9 +22,9 @@ export default function Chat({el, messages} = {}) {
 Chat.prototype.render = function() {
   this.messages.forEach(
     (message) => {
-      this.el.appendChild(
-        renderChatMessage({el: document.createElement('div'), message})
-      );
+      const chatMessage = new ChatMessage({el: document.createElement('div'), message});
+      chatMessage.render();
+      this.el.appendChild(chatMessage.el);
     }
   );
 
