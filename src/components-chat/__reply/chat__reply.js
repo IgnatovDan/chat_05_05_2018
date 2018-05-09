@@ -5,7 +5,8 @@ export default class ChatReplay {
   }
 
   render() {
-    this.el.classList.add('chat__reply');
-    this.el.innerText = 'Reply';
+    this.el.innerHTML = `
+      <input class="chat__reply__input" type="text" placeholder="Reply" required="required"/>
+    `;
   }
 }

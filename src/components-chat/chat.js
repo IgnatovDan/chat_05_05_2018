@@ -22,14 +22,19 @@ export default class Chat {
   render() {
     this.messages.forEach(
       (message) => {
-        const chatMessage = new ChatMessage({el: document.createElement('div'), message});
+        const messageEl = document.createElement('div');
+        this.el.appendChild(messageEl);
+
+        const chatMessage = new ChatMessage({el: messageEl, message});
         chatMessage.render();
-        this.el.appendChild(chatMessage.el);
       }
     );
   
-    const chatReply = new ChatReplay({el: document.createElement('div')});
+    const chatReplyEl = document.createElement('div');
+    chatReplyEl.classList.add('chat__reply-container');
+    this.el.appendChild(chatReplyEl);
+
+    const chatReply = new ChatReplay({el: chatReplyEl});
     chatReply.render();
-    this.el.appendChild(chatReply.el);
   }
 }
