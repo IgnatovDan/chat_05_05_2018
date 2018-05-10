@@ -19,22 +19,29 @@ export default class Chat {
     this.messages = messages;
   }
 
-  render() {
-    this.messages.forEach(
-      (message) => {
-        const messageEl = document.createElement('div');
-        this.el.appendChild(messageEl);
+  _renderMessageAtTheEnd(message) {
+    const messageEl = document.createElement('div');
+    this.el.appendChild(messageEl);
 
-        const chatMessage = new ChatMessage({el: messageEl, message});
-        chatMessage.render();
-      }
-    );
+    const chatMessage = new ChatMessage({el: messageEl, message});
+    chatMessage.render();
+  }
+
+  render() {
+    this.messages.forEach(message => this._renderMessageAtTheEnd(message));
   
     const chatReplyEl = document.createElement('div');
     chatReplyEl.classList.add('chat__reply-container');
     this.el.appendChild(chatReplyEl);
 
     const chatReply = new ChatReplay({el: chatReplyEl});
+    chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
+      (event) => {
+        const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
+        this.messages.push(message);
+        this._renderMessageAtTheEnd(message);
+      }
+    );
     chatReply.render();
   }
 }
