@@ -11,7 +11,7 @@ const messages = [
 ];
 
 const chat = new Chat({
-  el: document.getElementById('chatEl'), 
+  el: document.querySelector('.chat-container'), 
   data : { messages } 
 });
 chat.render();

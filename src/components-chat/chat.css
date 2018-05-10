@@ -4,3 +4,7 @@
 .chat__reply-container {
   background-color: gray;
 }
+
+.chat__messageList-container {
+  background-color: bisque;
+}

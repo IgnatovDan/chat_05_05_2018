@@ -1,4 +1,4 @@
-import ChatMessage from './message/chat__message.js';
+import MessageList from './messageList/chat__messageList.js';
 import ChatReplay from './reply/chat__reply.js';
 
     /*???
@@ -12,38 +12,34 @@ import ChatReplay from './reply/chat__reply.js';
     */
   
 export default class Chat {
-  constructor ({
-      el, 
-      data
-    }) {
-
+  constructor ({el, data}) {
     if(!el || !data) throw new Error("incorrect arguments");
 
     this.el = el;
     this.data = data;
   }
 
-  _renderMessageAtTheEnd(message) {
-    const messageEl = document.createElement('div');
-    this.el.appendChild(messageEl);
-
-    const chatMessage = new ChatMessage({el: messageEl, data : { message} });
-    chatMessage.render();
-  }
-
   render() {
-    this.data.messages.forEach(message => this._renderMessageAtTheEnd(message));
-  
-    const chatReplyEl = document.createElement('div');
-    chatReplyEl.classList.add('chat__reply-container');
-    this.el.appendChild(chatReplyEl);
+    this.el.innerHTML = '';
+    
+    const messageListContainerEl = document.createElement('div');
+    messageListContainerEl.classList.add('chat__messageList-container');
+    this.el.appendChild(messageListContainerEl);
 
-    const chatReply = new ChatReplay({el: chatReplyEl});
+    this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this.data.messages }});
+    this.messageList.render();
+  
+    const chatReplyContainerEl = document.createElement('div');
+    chatReplyContainerEl.classList.add('chat__reply-container');
+    this.el.appendChild(chatReplyContainerEl);
+
+    const chatReply = new ChatReplay({el: chatReplyContainerEl});
     chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
       (event) => {
         const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
         this.data.messages.push(message);
-        this._renderMessageAtTheEnd(message);
+        this.messageList.appendMessageElement(message);
+        //TODO: The position of the 'reply' section in visible area should kept but it is shifted down: save it before changes and restore after.
       }
     );
     chatReply.render();
