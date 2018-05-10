@@ -1,0 +1,9 @@
+.chat__reply {
+  background-color: lightgray;
+}
+
+.chat__reply__input {
+  background-color: lightGray;
+  box-sizing: border-box;
+  width: 100%;
+}

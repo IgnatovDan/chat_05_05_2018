@@ -1,5 +1,5 @@
-import ChatMessage from './__message/chat__message.js';
-import ChatReplay from './__reply/chat__reply.js';
+import ChatMessage from './message/chat__message.js';
+import ChatReplay from './reply/chat__reply.js';
 
     /*???
 
