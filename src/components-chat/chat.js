@@ -36,13 +36,12 @@ export default class Chat {
     const chatReply = new ChatReplay({el: chatReplyContainerEl});
     chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
       (event) => {
-        debugger;
+        let rectInitial = chatReplyContainerEl.getBoundingClientRect();
         const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
         this.data.messages.push(message);
         this.messageList.appendMessageElement(message);
-        chatReplyContainerEl.scrollIntoView(false);
-        //window.scrollTo();
-        //TODO: The position of the 'reply' section in visible area should kept but it is shifted down: save it before changes and restore after.
+        let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
+        window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
       }
     );
     chatReply.render();
