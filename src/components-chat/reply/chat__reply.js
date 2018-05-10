@@ -1,4 +1,4 @@
-import EventEmitter from '../../Modules/event-emitter.js';
+import EventEmitter from '../../view/event-emitter.js';
 
 export default class ChatReplay extends EventEmitter {
   constructor({el} = {}) {
