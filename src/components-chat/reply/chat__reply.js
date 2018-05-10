@@ -1,7 +1,7 @@
 import EventEmitter from '../../view/event-emitter.js';
 
 export default class ChatReplay extends EventEmitter {
-  constructor({el} = {}) {
+  constructor({el}) {
     if(!el) throw new Error("incorrect arguments");
     super();
     this.el = el;

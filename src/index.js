@@ -10,5 +10,8 @@ const messages = [
   {userPhoto: 'user5_photo', userName: 'Daniella Thompson', sentTime: new Date(), text: 'welcome!!'},
 ];
 
-const chat = new Chat({el: document.getElementById('chatEl'), messages});
+const chat = new Chat({
+  el: document.getElementById('chatEl'), 
+  data : { messages } 
+});
 chat.render();
