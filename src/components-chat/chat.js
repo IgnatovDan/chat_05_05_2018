@@ -48,6 +48,8 @@ export default class Chat {
           this.data.messages.push(message);
           this.messageList.appendMessageElement(message);
           let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
+
+          //TODO: there are some 'round' and controls are shifted down by 1px when each new message is added.
           window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
         }
       );
