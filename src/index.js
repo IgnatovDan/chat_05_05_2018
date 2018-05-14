@@ -5,7 +5,7 @@ import Store from './store/store.js';
 
 const chat = new Chat({
   el: document.querySelector('.chat-container'), 
-  data : { messages : [], state: Chat.STATE_LOADING } 
+  data : { messages : [], isLoading: true } 
 });
 
 const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.com'});
@@ -13,12 +13,11 @@ const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.
 store.createTestDatabaseAsync()
 .then(() => {
   console.log('createTestDatabaseAsync completed.');
-
   return store.queryMessagesAsync();
 })
 .then((messages) => {
   chat.data.messages = messages;
-  chat.data.state = null;
+  chat.data.isLoading = false;
   chat.render();
 })
 .catch(error => {

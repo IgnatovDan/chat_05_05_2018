@@ -22,7 +22,7 @@ export default class Chat {
   render() {
     this.el.innerHTML = '';
     
-    if(this.data.state === Chat.STATE_LOADING) {
+    if(this.data.isLoading) {
       this.el.innerHTML = 'Loading...';
     }
     else if(this.data.messages.length === 0) {
@@ -55,5 +55,3 @@ export default class Chat {
     }
   }
 }
-
-Chat.STATE_LOADING = 'Loading';
