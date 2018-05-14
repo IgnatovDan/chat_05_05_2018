@@ -91,6 +91,7 @@ function _createMessagesAsync({ usersJsonUrl, users, messagesJsonUrl, messages }
 function _findUserKey({ clientUserKey, clientUsers, serverUsers }) {
   const clientUser = clientUsers.find(item => item.key === clientUserKey);
   if(clientUser) {
+    //Object.entries ?
     return Object.getOwnPropertyNames(serverUsers).find(propertyName => serverUsers[propertyName].name === clientUser.name);
   }
   else {
