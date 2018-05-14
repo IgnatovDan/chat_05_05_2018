@@ -22,8 +22,11 @@ export default class Chat {
   render() {
     this.el.innerHTML = '';
     
-    if(this.data.messages.length === 0) {
-      this.el.innerHTML = 'no messages/loading';
+    if(this.data.state === Chat.STATE_LOADING) {
+      this.el.innerHTML = 'Loading...';
+    }
+    else if(this.data.messages.length === 0) {
+      this.el.innerHTML = 'No messages.';
     }
     else {
       const messageListContainerEl = document.createElement('div');
@@ -52,3 +55,5 @@ export default class Chat {
     }
   }
 }
+
+Chat.STATE_LOADING = 'Loading';
