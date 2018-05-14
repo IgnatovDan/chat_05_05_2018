@@ -17,7 +17,7 @@ export default class Store {
 
   queryMessagesAsync() {
     let serverUsers, serverMessages;
-    return Promise.all(new Array(
+    return Promise.all([
       fetch(this._getUsersJsonUrl())
         .then((usersResponse) => {
           return usersResponse.json();
@@ -33,21 +33,23 @@ export default class Store {
         .then((_serverMessages) => {
           serverMessages = _serverMessages;
           return Promise.resolve();
-        }))
+        })]
     )
     .then(
-      (serverData) => {
-        //TODO: convert serverMessage to clientMessages
-        //new Array(serverData.users)
-        //new Array(serverData.messages)
-        const messages = [
-          {userPhoto: 'user1_photo', userName: 'Ayowa Sonito', sentTime: new Date(new Date().getTime() - 10*60000), text: 'hi!'},
-          {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(new Date().getTime() - 9*60000), text: 'xdf'},
-          {userPhoto: 'user3_photo', userName: 'John Money', sentTime: new Date(new Date().getTime() - 6*60000), text: 'Hey You, happy to have you here!'},
-          {userPhoto: 'user4_photo', userName: 'Babel Thomas', sentTime: new Date(new Date().getTime() - 3*60000), text: 'How are you?'},
-          {userPhoto: 'user5_photo', userName: 'Daniella Thompson', sentTime: new Date(), text: 'welcome!!'},
-        ];
-        return messages;
+      () => {
+        const clientMessages = Object.values(serverMessages).map(
+          (item) => {
+            const serverUser = serverUsers[item.userKey];
+            return {
+              userPhoto: serverUser.photo,
+              userName: serverUser.name,
+              sentTime: new Date(Date.parse(item.sentDateTime)),
+              text: item.text
+            };
+          }
+        );
+        clientMessages.sort((a, b) => a.sentTime - b.sentTime);
+        return clientMessages;
       }
     );
   }
