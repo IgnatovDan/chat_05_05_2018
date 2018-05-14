@@ -46,8 +46,9 @@ export default class Store {
     );
   }
 
-  storeChatMessageAsync({ text } = {}) {
-    if(!text || !this.currentUserKey || !this.currentUser) throw new Error('Invalid arguments');
+  async storeChatMessageAsync({ text } = {}) {
+    if(!text) throw new Error('Text is empty.')
+    if(!this.currentUserKey || !this.currentUser) throw new Error('Invalid state');
 
     let sentDateTime = new Date();
     return fetch(this._getMessagesJsonUrl(),

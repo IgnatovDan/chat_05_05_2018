@@ -48,7 +48,14 @@ export default class Chat {
             this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
             .then((chatMessage) => {
               chatReply.setIsSending(false);
-                this._showMessage(chatReplyContainerEl, chatMessage);
+              chatReply.clearReplyMessageText();
+              this._showMessage(chatReplyContainerEl, chatMessage);
+            })
+            .catch((error) => {
+              console.log('Error occured:');
+              console.dir(error);
+              alert(error);
+              chatReply.setIsSending(false);
             });
           }
           else {

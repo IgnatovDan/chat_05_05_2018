@@ -15,7 +15,9 @@ export default class ChatReplay extends EventEmitter {
     `;
 
     this._getSendButtonEl().addEventListener('click', (evt) => {
-      this.dispatchEvent({type: ChatReplay.EVENTS_SENDREPLYMESSAGE});
+      //if(this.getReplyMessageText()) {
+        this.dispatchEvent({type: ChatReplay.EVENTS_SENDREPLYMESSAGE});
+      //}
     });
 
     this.setIsSending(false);
@@ -23,6 +25,10 @@ export default class ChatReplay extends EventEmitter {
 
   getReplyMessageText() {
     return this._getReplyMessageEl().value;
+  }
+
+  clearReplyMessageText() {
+    return this._getReplyMessageEl().value = '';
   }
 
   setIsSending(isSending) {
@@ -34,7 +40,6 @@ export default class ChatReplay extends EventEmitter {
     }
     else {
       this._getReplyMessageEl().disabled = false;
-      this._getReplyMessageEl().value = '';
       this._getSendButtonEl().disabled = false;
       this._getSendingTextEl().classList.add('chat__reply__sendingText_isSending');
     }
