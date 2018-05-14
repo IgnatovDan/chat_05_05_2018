@@ -2,6 +2,7 @@
 
 import Chat from './components-chat/chat.js';
 import Store from './store/store.js';
+import createTestDataAsync from './store/createTestDataAsync.js';
 
 const chat = new Chat({
   el: document.querySelector('.chat-container'), 
@@ -10,9 +11,14 @@ const chat = new Chat({
 
 const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.com'});
 
-store.createTestDatabaseAsync()
+createTestDataAsync(
+  { 
+    usersJsonUrl: store._getUsersJsonUrl(),
+    messagesJsonUrl: store._getMessagesJsonUrl(),
+  }
+)
 .then(() => {
-  console.log('createTestDatabaseAsync completed.');
+  console.log('createTestDataAsync completed.');
   return store.queryMessagesAsync();
 })
 .then((messages) => {
@@ -21,7 +27,7 @@ store.createTestDatabaseAsync()
   chat.render();
 })
 .catch(error => {
-  console.log('createTestDatabaseAsync error:');
+  console.log('Error oocured:');
   console.dir(error);
   alert(error);
 });

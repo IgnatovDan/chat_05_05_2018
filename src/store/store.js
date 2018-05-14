@@ -1,18 +1,7 @@
-import _createTestDataAsync from './createTestDataAsync.js';
-
 export default class Store {
   constructor({rootConnectionString}) {
     if(!rootConnectionString) throw new Error('Invalid arguments');
     this.rootConnectionString = rootConnectionString;
-  }
-
-  createTestDatabaseAsync() {
-    return _createTestDataAsync(
-      { 
-        usersJsonUrl: this._getUsersJsonUrl(),
-        messagesJsonUrl: this._getMessagesJsonUrl(),
-      }
-    );
   }
 
   queryMessagesAsync() {
