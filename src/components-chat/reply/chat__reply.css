@@ -7,3 +7,7 @@
   box-sizing: border-box;
   width: 100%;
 }
+
+.chat__reply__sendingText_isSending {
+  display: none;
+}

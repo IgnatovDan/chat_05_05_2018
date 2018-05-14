@@ -11,6 +11,8 @@ const chat = new Chat({
 
 const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.com'});
 
+chat.data.storeMessageAsyncCallback = (chatMessage) => store.storeChatMessageAsync(chatMessage);
+
 createTestDataAsync(
   { 
     usersJsonUrl: store._getUsersJsonUrl(),

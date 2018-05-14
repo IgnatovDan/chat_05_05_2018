@@ -43,17 +43,31 @@ export default class Chat {
       const chatReply = new ChatReplay({el: chatReplyContainerEl});
       chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
         (event) => {
-          let rectInitial = chatReplyContainerEl.getBoundingClientRect();
-          const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
-          this.data.messages.push(message);
-          this.messageList.appendMessageElement(message);
-          let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
-
-          //TODO: there are some 'round' and controls are shifted down by 1px when each new message is added.
-          window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
+          if(this.data.storeMessageAsyncCallback != null) {
+            chatReply.setIsSending(true);
+            this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
+            .then((chatMessage) => {
+              chatReply.setIsSending(false);
+                this._showMessage(chatReplyContainerEl, chatMessage);
+            });
+          }
+          else {
+            throw new Error('data.storeMessageAsyncCallback value is incorrect');
+            //this._showMessage({ userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText() });
+          }
         }
       );
       chatReply.render();
     }
+  }
+
+  _showMessage(chatReplyContainerEl, chatMessage) {
+    this.data.messages.push(chatMessage);
+
+    let rectInitial = chatReplyContainerEl.getBoundingClientRect();
+    this.messageList.appendMessageElement(chatMessage);
+    let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
+    //TODO: there are some 'round' and controls are shifted down by 1px when each new message is added.
+    window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
   }
 }
