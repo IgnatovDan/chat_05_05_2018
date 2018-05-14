@@ -22,28 +22,33 @@ export default class Chat {
   render() {
     this.el.innerHTML = '';
     
-    const messageListContainerEl = document.createElement('div');
-    messageListContainerEl.classList.add('chat__messageList-container');
-    this.el.appendChild(messageListContainerEl);
+    if(this.data.messages.length === 0) {
+      this.el.innerHTML = 'no messages/loading';
+    }
+    else {
+      const messageListContainerEl = document.createElement('div');
+      messageListContainerEl.classList.add('chat__messageList-container');
+      this.el.appendChild(messageListContainerEl);
 
-    this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this.data.messages }});
-    this.messageList.render();
-  
-    const chatReplyContainerEl = document.createElement('div');
-    chatReplyContainerEl.classList.add('chat__reply-container');
-    this.el.appendChild(chatReplyContainerEl);
+      this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this.data.messages }});
+      this.messageList.render();
+    
+      const chatReplyContainerEl = document.createElement('div');
+      chatReplyContainerEl.classList.add('chat__reply-container');
+      this.el.appendChild(chatReplyContainerEl);
 
-    const chatReply = new ChatReplay({el: chatReplyContainerEl});
-    chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
-      (event) => {
-        let rectInitial = chatReplyContainerEl.getBoundingClientRect();
-        const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
-        this.data.messages.push(message);
-        this.messageList.appendMessageElement(message);
-        let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
-        window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
-      }
-    );
-    chatReply.render();
+      const chatReply = new ChatReplay({el: chatReplyContainerEl});
+      chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
+        (event) => {
+          let rectInitial = chatReplyContainerEl.getBoundingClientRect();
+          const message = {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText()};
+          this.data.messages.push(message);
+          this.messageList.appendMessageElement(message);
+          let rectCurrent = chatReplyContainerEl.getBoundingClientRect();
+          window.scrollBy(0, rectCurrent.y - rectInitial.y); //keep visual position of the Reply section unchanged.
+        }
+      );
+      chatReply.render();
+    }
   }
 }

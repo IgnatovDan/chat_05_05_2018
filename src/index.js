@@ -1,17 +1,29 @@
 'use strict';
 
 import Chat from './components-chat/chat.js';
-
-const messages = [
-  {userPhoto: 'user1_photo', userName: 'Ayowa Sonito', sentTime: new Date(new Date().getTime() - 10*60000), text: 'hi!'},
-  {userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(new Date().getTime() - 9*60000), text: 'xdf'},
-  {userPhoto: 'user3_photo', userName: 'John Money', sentTime: new Date(new Date().getTime() - 6*60000), text: 'Hey You, happy to have you here!'},
-  {userPhoto: 'user4_photo', userName: 'Babel Thomas', sentTime: new Date(new Date().getTime() - 3*60000), text: 'How are you?'},
-  {userPhoto: 'user5_photo', userName: 'Daniella Thompson', sentTime: new Date(), text: 'welcome!!'},
-];
+import Store from './store/store.js';
 
 const chat = new Chat({
   el: document.querySelector('.chat-container'), 
-  data : { messages } 
+  data : { messages : [] } 
 });
+
+const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.com'});
+
+store.createTestDatabaseAsync()
+.then(() => {
+  console.log('createTestDatabaseAsync completed.');
+
+  return store.queryMessagesAsync();
+})
+.then((messages) => {
+  chat.data.messages = messages;
+  chat.render();
+})
+.catch(error => {
+  console.log('createTestDatabaseAsync error:');
+  console.dir(error);
+  alert(error);
+});
+
 chat.render();
