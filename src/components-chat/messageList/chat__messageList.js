@@ -10,6 +10,10 @@ export default class MessageList {
   }
 
   render() {
+    if(this._nextRenderTimeoutId) {
+      clearTimeout(this._nextRenderTimeoutId);
+    }
+
     if(!this._queryMessagesAsyncCallback) {
       this.el.innerText = 'queryMessagesAsyncCallback value is incorrect';
     }
@@ -25,6 +29,7 @@ export default class MessageList {
           this.el.innerHTML = '';
           messages.forEach(message => this.appendMessageElement(message));
         }
+        this._nextRenderTimeoutId = setTimeout(() => this.render(), 5000);
       });
     }
   }

@@ -25,7 +25,6 @@ const tryCreateTestDataAsync = async function() {
 const queryMessagesAsync = async function() {
   return tryCreateTestDataAsync()
     .then(() => {
-      console.log('createTestDataAsync completed.');
       return store.queryMessagesAsync();
     })
     .then((messages) => {
