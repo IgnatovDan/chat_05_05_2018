@@ -41,30 +41,30 @@ export default class Chat {
       this.el.appendChild(chatReplyContainerEl);
 
       const chatReply = new ChatReplay({el: chatReplyContainerEl});
-      chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, 
-        (event) => {
-          if(this.data.storeMessageAsyncCallback != null) {
-            chatReply.setIsSending(true);
-            this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
-            .then((chatMessage) => {
-              chatReply.setIsSending(false);
-              chatReply.clearReplyMessageText();
-              this._showMessage(chatReplyContainerEl, chatMessage);
-            })
-            .catch((error) => {
-              console.log('Error occured:');
-              console.dir(error);
-              alert(error);
-              chatReply.setIsSending(false);
-            });
-          }
-          else {
-            throw new Error('data.storeMessageAsyncCallback value is incorrect');
-            //this._showMessage({ userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText() });
-          }
-        }
-      );
+      chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, this._chatReply_SendReplyMessageEventHandler.bind(this));
       chatReply.render();
+    }
+  }
+
+  _chatReply_SendReplyMessageEventHandler(event) {
+    if(this.data.storeMessageAsyncCallback != null) {
+      chatReply.setIsSending(true);
+      this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
+      .then((chatMessage) => {
+        chatReply.setIsSending(false);
+        chatReply.clearReplyMessageText();
+        this._showMessage(chatReplyContainerEl, chatMessage);
+      })
+      .catch((error) => {
+        console.log('Error occured:');
+        console.dir(error);
+        alert(error);
+        chatReply.setIsSending(false);
+      });
+    }
+    else {
+      throw new Error('data.storeMessageAsyncCallback value is incorrect');
+      //this._showMessage({ userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText() });
     }
   }
 
