@@ -6,32 +6,37 @@ import createTestDataAsync from './store/createTestDataAsync.js';
 
 const store = new Store({rootConnectionString: 'https://chat05052018.firebaseio.com'});
 
+let isCreateTestDataAsyncCalled = false;
+
+const tryCreateTestDataAsync = async function() {
+  if(isCreateTestDataAsyncCalled) {
+    return Promise.resolve();
+  }
+  else {
+    isCreateTestDataAsyncCalled = true;
+    return createTestDataAsync(
+      { 
+        usersJsonUrl: store._getUsersJsonUrl(),
+        messagesJsonUrl: store._getMessagesJsonUrl(),
+      });
+  }
+}
+
+const queryMessagesAsync = async function() {
+  return tryCreateTestDataAsync()
+    .then(() => {
+      console.log('createTestDataAsync completed.');
+      return store.queryMessagesAsync();
+    })
+    .then((messages) => {
+      return Promise.resolve(messages);
+    });
+}
+
 const chat = new Chat({
   el: document.querySelector('.chat-container'), 
-  messages : [], 
-  isLoading: true,
-  storeMessageAsyncCallback: (chatMessage) => store.storeChatMessageAsync(chatMessage)
-});
-
-createTestDataAsync(
-  { 
-    usersJsonUrl: store._getUsersJsonUrl(),
-    messagesJsonUrl: store._getMessagesJsonUrl(),
-  }
-)
-.then(() => {
-  console.log('createTestDataAsync completed.');
-  return store.queryMessagesAsync();
-})
-.then((messages) => {
-  chat._messages = messages;
-  chat._isLoading = false;
-  chat.render();
-})
-.catch(error => {
-  console.log('Error oocured:');
-  console.dir(error);
-  alert(error);
+  queryMessagesAsyncCallback: queryMessagesAsync,
+  storeMessageAsyncCallback: (chatMessage) => store.storeChatMessageAsync(chatMessage),
 });
 
 chat.render();

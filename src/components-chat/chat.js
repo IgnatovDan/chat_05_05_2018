@@ -12,51 +12,44 @@ import ChatReplay from './reply/chat__reply.js';
     */
   
 export default class Chat {
-  constructor ({el, messages, isLoading, storeMessageAsyncCallback}) {
-    if(!el || !messages || !storeMessageAsyncCallback) throw new Error("incorrect arguments");
+  constructor ({ el, queryMessagesAsyncCallback, storeMessageAsyncCallback }) {
+    if(!el) throw new Error("incorrect arguments");
 
     this.el = el;
-    this._messages = messages;
-    this._isLoading = isLoading;
     this._storeMessageAsyncCallback = storeMessageAsyncCallback;
+    this._queryMessagesAsyncCallback = queryMessagesAsyncCallback;
   }
 
   render() {
     this.el.innerHTML = '';
     
-    if(this._isLoading) {
-      this.el.innerHTML = 'Loading...';
-    }
-    else if(this._messages.length === 0) {
-      this.el.innerHTML = 'No messages.';
-    }
-    else {
-      const messageListContainerEl = document.createElement('div');
-      messageListContainerEl.classList.add('chat__messageList-container');
-      this.el.appendChild(messageListContainerEl);
+    const messageListContainerEl = document.createElement('div');
+    messageListContainerEl.classList.add('chat__messageList-container');
+    this.el.appendChild(messageListContainerEl);
 
-      this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this._messages }});
-      this.messageList.render();
-    
-      const chatReplyContainerEl = document.createElement('div');
-      chatReplyContainerEl.classList.add('chat__reply-container');
-      this.el.appendChild(chatReplyContainerEl);
+    this.messageList = new MessageList({ el: messageListContainerEl, queryMessagesAsyncCallback: this._queryMessagesAsyncCallback });
+    this.messageList.render();
+  
+    const chatReplyContainerEl = document.createElement('div');
+    chatReplyContainerEl.classList.add('chat__reply-container');
+    this.el.appendChild(chatReplyContainerEl);
 
-      const chatReply = new ChatReplay({el: chatReplyContainerEl});
-      chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, this._chatReply_SendReplyMessageEventHandler.bind(this));
-      chatReply.render();
-    }
+    const chatReply = new ChatReplay({el: chatReplyContainerEl});
+    chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, this._chatReply_SendReplyMessageEventHandler.bind(this));
+    chatReply.render();
   }
 
   _chatReply_SendReplyMessageEventHandler(event) {
     if(this._storeMessageAsyncCallback != null) {
       const chatReply = event.sender;
+      
       chatReply.setIsSending(true);
       this._storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
       .then((chatMessage) => {
         chatReply.setIsSending(false);
         chatReply.clearReplyMessageText();
-        this._showMessage(chatReplyContainerEl, chatMessage);
+        //this._showMessage(chatReplyContainerEl, chatMessage);
+        this.messageList.render();
       })
       .catch((error) => {
         console.log('Error occured:');

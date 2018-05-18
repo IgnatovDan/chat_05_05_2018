@@ -2,16 +2,31 @@ import ChatMessage from './../message/chat__message.js';
 
 export default class MessageList {
 
-  constructor({el, data}) {
-    if(!el || !data) throw new Error("incorrect arguments");
+  constructor({el, queryMessagesAsyncCallback}) {
+    if(!el) throw new Error("incorrect arguments");
 
     this.el = el;
-    this.data = data;
+    this._queryMessagesAsyncCallback = queryMessagesAsyncCallback;
   }
 
   render() {
-    this.el.innerHTML = '';
-    this.data.messages.forEach(message => this.appendMessageElement(message));
+    if(!this._queryMessagesAsyncCallback) {
+      this.el.innerText = 'queryMessagesAsyncCallback value is incorrect';
+    }
+    else {
+      this.el.innerText = 'Loading...'; //TODO: change explicit HTML content to 'block modifier' as CSS style
+      
+      this._queryMessagesAsyncCallback()
+      .then((messages) => {
+        if(messages.length === 0) {
+          this.el.innerText = 'No messages';
+        }
+        else {
+          this.el.innerHTML = '';
+          messages.forEach(message => this.appendMessageElement(message));
+        }
+      });
+    }
   }
 
   appendMessageElement(message) {
