@@ -16,7 +16,7 @@ export default class ChatReplay extends EventEmitter {
 
     this._getSendButtonEl().addEventListener('click', (evt) => {
       //if(this.getReplyMessageText()) {
-        this.dispatchEvent({type: ChatReplay.EVENTS_SENDREPLYMESSAGE});
+        this.dispatchEvent({type: ChatReplay.EVENTS_SENDREPLYMESSAGE, sender: this});
       //}
     });
 

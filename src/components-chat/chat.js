@@ -48,6 +48,7 @@ export default class Chat {
 
   _chatReply_SendReplyMessageEventHandler(event) {
     if(this.data.storeMessageAsyncCallback != null) {
+      const chatReply = event.sender;
       chatReply.setIsSending(true);
       this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
       .then((chatMessage) => {
