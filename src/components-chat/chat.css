@@ -1,10 +1,5 @@
-
-/* debugging */
-
-.chat__reply-container {
-  background-color: gray;
-}
-
-.chat__messageList-container {
-  background-color: bisque;
-}
+/* .chat {
+  border: 1px solid darkcyan;
+  background-color: lightcyan;
+  padding: 3px 3px 3px 3px;
+} */

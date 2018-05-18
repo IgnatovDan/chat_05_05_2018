@@ -10,15 +10,14 @@ export default class ChatMessage {
     this.data = data;
   }
 
-  //completely replaces the innerHTML of the 'ctor(el)' element
   render() {
-    this.el.classList.add('chat__message'); //TODO: class is added while content should be completely replaced!!!
+    this.el.classList.add('chat__messageList__message');
   
     this.el.innerHTML = `
-      <div class="chat__message__user-photo">${this.data.message.userPhoto}</div>
-      <div class="chat__message__user-name">${this.data.message.userName}</div>
-      <div class="chat__message__sent-time">${this.data.message.sentTime.toLocaleString()}</div>
-      <div class="chat__message__text">${this.data.message.text}</div>
+      <div class="chat__messageList__message__user-photo">${this.data.message.userPhoto}</div>
+      <div class="chat__messageList__message__user-name">${this.data.message.userName}</div>
+      <div class="chat__messageList__message__sent-time">${this.data.message.sentTime.toLocaleString()}</div>
+      <div class="chat__messageList__message__text">${this.data.message.text}</div>
     `;
   }
 }

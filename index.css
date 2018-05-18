@@ -1,4 +1,4 @@
-.chat {
-  border: 1px solid gray;
+.chatElement {
+  border: 1px solid darkcyan;
+  background-color: lightcyan;
 }
-

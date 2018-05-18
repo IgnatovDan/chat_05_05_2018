@@ -8,6 +8,7 @@ export default class ChatReplay extends EventEmitter {
   }
 
   render() {
+    this.el.classList.add('chat__reply');
     this.el.innerHTML = `
       <input class="chat__reply__input" type="text" placeholder="Reply" required="required"/>
       <button class=""><img alt="Send" decoding="async" height="20" width="24" src="./src/components-chat/reply/send__button.png"/></button>

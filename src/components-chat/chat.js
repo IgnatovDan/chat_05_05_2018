@@ -21,20 +21,19 @@ export default class Chat {
   }
 
   render() {
+    this.el.classList.add('chat');
     this.el.innerHTML = '';
     
-    const messageListContainerEl = document.createElement('div');
-    messageListContainerEl.classList.add('chat__messageList-container');
-    this.el.appendChild(messageListContainerEl);
+    const messageListEl = document.createElement('div');
+    this.el.appendChild(messageListEl);
 
-    this.messageList = new MessageList({ el: messageListContainerEl, queryMessagesAsyncCallback: this._queryMessagesAsyncCallback });
+    this.messageList = new MessageList({ el: messageListEl, queryMessagesAsyncCallback: this._queryMessagesAsyncCallback });
     this.messageList.render();
   
-    const chatReplyContainerEl = document.createElement('div');
-    chatReplyContainerEl.classList.add('chat__reply-container');
-    this.el.appendChild(chatReplyContainerEl);
+    const chatReplyEl = document.createElement('div');
+    this.el.appendChild(chatReplyEl);
 
-    const chatReply = new ChatReplay({el: chatReplyContainerEl});
+    const chatReply = new ChatReplay({el: chatReplyEl});
     chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, this._chatReply_SendReplyMessageEventHandler.bind(this));
     chatReply.render();
   }

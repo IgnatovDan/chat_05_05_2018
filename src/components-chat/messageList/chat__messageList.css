@@ -1,3 +1,5 @@
-.chat__messageList__message-container {
-  border: 1px solid lightgreen;
+.chat__messageList {
+  background-color: lightblue;
+  border: 1px solid darkblue;
+  margin: 3px 3px 3px 3px;
 }

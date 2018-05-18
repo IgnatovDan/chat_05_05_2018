@@ -10,6 +10,8 @@ export default class MessageList {
   }
 
   render() {
+    this.el.classList.add('chat__messageList');
+
     if(this._nextRenderTimeoutId) {
       clearTimeout(this._nextRenderTimeoutId);
     }
@@ -35,11 +37,10 @@ export default class MessageList {
   }
 
   appendMessageElement(message) {
-    const messageContainerEl = document.createElement('div');
-    messageContainerEl.classList.add('chat__messageList__message-container');
-    this.el.appendChild(messageContainerEl);
+    const messageEl = document.createElement('div');
+    this.el.appendChild(messageEl);
 
-    const chatMessage = new ChatMessage({el: messageContainerEl, data : { message} });
+    const chatMessage = new ChatMessage({el: messageEl, data : { message} });
     chatMessage.render();
   }
 }

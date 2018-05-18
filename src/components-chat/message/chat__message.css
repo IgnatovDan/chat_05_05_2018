@@ -1,12 +1,29 @@
-.chat__message__user-photo {
-  color: cornflowerblue
+.chat__messageList__message {
+  background-color: lightskyblue;
+  border: 1px solid darkblue;
+  margin: 3px 3px 3px 3px;
 }
-.chat__message__user-name {
-  color: rgb(58, 99, 154)
+
+.chat__messageList__message__user-photo {
+  color: cornflowerblue;
+  border: 1px solid darkgoldenrod;
+  margin: 1px 1px 1px 1px;
 }
-.chat__message__sent-time {
-  color: rgb(117, 124, 172)
+
+.chat__messageList__message__user-name {
+  color: rgb(58, 99, 154);
+  border: 1px solid darkgoldenrod;
+  margin: 1px 1px 1px 1px;
 }
-.chat__message__text {
-  font-weight: bold
+
+.chat__messageList__message__sent-time {
+  color: rgb(117, 124, 172);
+  border: 1px solid darkgoldenrod;
+  margin: 1px 1px 1px 1px;
+}
+
+.chat__messageList__message__text {
+  font-weight: bold;
+  border: 1px solid darkgoldenrod;
+  margin: 1px 1px 1px 1px;
 }

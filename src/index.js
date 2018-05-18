@@ -33,7 +33,7 @@ const queryMessagesAsync = async function() {
 }
 
 const chat = new Chat({
-  el: document.querySelector('.chat-container'), 
+  el: document.querySelector('.chatElement'), 
   queryMessagesAsyncCallback: queryMessagesAsync,
   storeMessageAsyncCallback: (chatMessage) => store.storeChatMessageAsync(chatMessage),
 });

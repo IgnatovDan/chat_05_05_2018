@@ -1,5 +1,7 @@
 .chat__reply {
   background-color: lightgray;
+  border: 1px solid blue;
+  margin: 3px 3px 3px 3px;
 }
 
 .chat__reply__input {
