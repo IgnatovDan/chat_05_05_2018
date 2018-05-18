@@ -12,20 +12,22 @@ import ChatReplay from './reply/chat__reply.js';
     */
   
 export default class Chat {
-  constructor ({el, data}) {
-    if(!el || !data) throw new Error("incorrect arguments");
+  constructor ({el, messages, isLoading, storeMessageAsyncCallback}) {
+    if(!el || !messages || !storeMessageAsyncCallback) throw new Error("incorrect arguments");
 
     this.el = el;
-    this.data = data;
+    this._messages = messages;
+    this._isLoading = isLoading;
+    this._storeMessageAsyncCallback = storeMessageAsyncCallback;
   }
 
   render() {
     this.el.innerHTML = '';
     
-    if(this.data.isLoading) {
+    if(this._isLoading) {
       this.el.innerHTML = 'Loading...';
     }
-    else if(this.data.messages.length === 0) {
+    else if(this._messages.length === 0) {
       this.el.innerHTML = 'No messages.';
     }
     else {
@@ -33,7 +35,7 @@ export default class Chat {
       messageListContainerEl.classList.add('chat__messageList-container');
       this.el.appendChild(messageListContainerEl);
 
-      this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this.data.messages }});
+      this.messageList = new MessageList({ el: messageListContainerEl, data: { messages: this._messages }});
       this.messageList.render();
     
       const chatReplyContainerEl = document.createElement('div');
@@ -47,10 +49,10 @@ export default class Chat {
   }
 
   _chatReply_SendReplyMessageEventHandler(event) {
-    if(this.data.storeMessageAsyncCallback != null) {
+    if(this._storeMessageAsyncCallback != null) {
       const chatReply = event.sender;
       chatReply.setIsSending(true);
-      this.data.storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
+      this._storeMessageAsyncCallback({ text: chatReply.getReplyMessageText()})
       .then((chatMessage) => {
         chatReply.setIsSending(false);
         chatReply.clearReplyMessageText();
@@ -64,13 +66,13 @@ export default class Chat {
       });
     }
     else {
-      throw new Error('data.storeMessageAsyncCallback value is incorrect');
+      throw new Error('_storeMessageAsyncCallback value is incorrect');
       //this._showMessage({ userPhoto: 'user2_photo', userName: 'You', sentTime: new Date(), text: chatReply.getReplyMessageText() });
     }
   }
 
   _showMessage(chatReplyContainerEl, chatMessage) {
-    this.data.messages.push(chatMessage);
+    this._messages.push(chatMessage);
 
     let rectInitial = chatReplyContainerEl.getBoundingClientRect();
     this.messageList.appendMessageElement(chatMessage);
