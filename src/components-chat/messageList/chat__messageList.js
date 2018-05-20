@@ -35,16 +35,14 @@ export default class MessageList extends EventEmitter {
           this.messageListEl = document.createElement('div');
           messages.forEach(message => this.appendMessageElement(message));
           if(oldMessageListEl) {
-            this.dispatchEvent({ type: MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE });
             this.el.replaceChild(this.messageListEl, oldMessageListEl);
-            this.dispatchEvent({ type: MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE });
           }
           else {
             this.el.innerHTML = '';
             this.el.appendChild(this.messageListEl);
-            this.dispatchEvent({ type: MessageList.EVENTS_APPENDMESSAGELISTELEMENTAFTER });
           }
         }
+        this.dispatchEvent({ type: MessageList.EVENTS_RENDER_AFTER });
         this._nextRenderTimeoutId = setTimeout(() => this.render(), 5000);
       });
     }
@@ -59,6 +57,4 @@ export default class MessageList extends EventEmitter {
   }
 }
 
-MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE = 'replaceMessageListElement:before';
-MessageList.EVENTS_REPLACEMESSAGELISTELEMENTAFTER = 'replaceMessageListElement:after';
-MessageList.EVENTS_APPENDMESSAGELISTELEMENTAFTER = 'appendMessageListElement:after';
+MessageList.EVENTS_RENDER_AFTER = 'render-after';

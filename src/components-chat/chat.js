@@ -29,16 +29,20 @@ export default class Chat {
 
     this.messageList = new MessageList({ el: messageListEl, queryMessagesAsyncCallback: this._queryMessagesAsyncCallback });
     //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
-    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
-    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
+    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTAFTER, this._messageList_replaceMessageListElementAfter.bind(this));
+    this.messageList.addEventListener(MessageList.EVENTS_RENDER_AFTER, this._messageList_renderAfter.bind(this));
     this.messageList.render();
   
-    const chatReplyEl = document.createElement('div');
-    this.el.appendChild(chatReplyEl);
+    this._chatReplyEl = document.createElement('div');
+    this.el.appendChild(this._chatReplyEl);
 
-    const chatReply = new ChatReplay({el: chatReplyEl});
+    const chatReply = new ChatReplay({el: this._chatReplyEl});
     chatReply.addEventListener(ChatReplay.EVENTS_SENDREPLYMESSAGE, this._chatReply_SendReplyMessageEventHandler.bind(this));
     chatReply.render();
+  }
+
+  _messageList_renderAfter(event) {
+    this._chatReplyEl.scrollIntoView();
   }
 
   _chatReply_SendReplyMessageEventHandler(event) {
