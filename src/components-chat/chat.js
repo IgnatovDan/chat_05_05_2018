@@ -28,6 +28,9 @@ export default class Chat {
     this.el.appendChild(messageListEl);
 
     this.messageList = new MessageList({ el: messageListEl, queryMessagesAsyncCallback: this._queryMessagesAsyncCallback });
+    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
+    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
+    //this.messageList.addEventListener(MessageList.EVENTS_REPLACEMESSAGELISTELEMENTBEFORE, this._messageList_replaceMessageListElementBefore.bind(this));
     this.messageList.render();
   
     const chatReplyEl = document.createElement('div');
